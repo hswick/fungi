@@ -7,10 +7,8 @@ defmodule FungiTest do
     :ok
   end
 
-  test "deploys Fungi" do
-    
-    assert Fungi.hello == 42       
-    
+  test "calls hello" do    
+    assert Fungi.hello == 42    
   end
 
 end
