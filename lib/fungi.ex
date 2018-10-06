@@ -24,8 +24,31 @@ defmodule Fungi do
     ExW3.Contract.at(:Fungi, address)    
   end
 
-  def hello do
-    {:ok, num} = ExW3.Contract.call(:Fungi, :hello)
-    num
+  def new_point(account) do
+    ExW3.Contract.send(:Fungi, :newPoint, [], %{from: account})
   end
+
+  def get_point(account) do
+    {:ok, point} = ExW3.Contract.call(:Fungi, :getPoint, [account])
+    point
+  end
+
+  def new_connection_request(account0, account1) do
+    ExW3.Contract.send(:Fungi, :newConnectionRequest, [account1], %{from: account0})
+  end
+
+  def approve_connection_request(account0, account1) do
+    ExW3.Contract.send(:Fungi, :approveConnectionRequest, [account1], %{from: account0})
+  end
+
+  def link_address(account0, account1) do
+    {:ok, address} = ExW3.Contract.call(:Fungi, :linkAddress, [account0, account1])
+    address
+  end
+
+  def get_connection(link_address) do
+    {:ok, connection} = ExW3.Contract.call(:Fungi, :getConnection, [link_address])
+    connection
+  end
+
 end
