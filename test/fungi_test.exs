@@ -14,7 +14,7 @@ defmodule FungiTest do
       }
   end
 
-  test "new point/get point", context do   
+  test "new point/get point", context do 
 
     {x, y} = Fungi.get_point(context[:account0])
 
@@ -22,20 +22,24 @@ defmodule FungiTest do
     assert y |> is_integer
   end
 
-  test "new connection", context do
-    Fungi.new_connection_request(context[:account0], context[:account1])
-
-    Fungi.approve_connection_request(context[:account1], context[:account0])
-
-    link = Fungi.link_address(context[:account0], context[:account1])
-    other_link = Fungi.link_address(context[:account1], context[:account0])
+  test "link address works both ways", context do
+    link = Fungi.to_link_address(context[:account0], context[:account1])
+    other_link = Fungi.to_link_address(context[:account1], context[:account0])
 
     assert link == other_link
+  end
+
+  test "new connection", context do
+    Fungi.new_connection_request(context[:account0], context[:account1])    
+
+    link = Fungi.to_link_address(context[:account0], context[:account1])
+
+    Fungi.approve_connection_request(link, context[:account1])    
 
     {alice, bob} = Fungi.get_connection(link)
 
-    assert alice == context[:account0]
-    assert bob == context[:account1]
+    assert alice == context[:account1]
+    assert bob == context[:account0]
   end
 
 end
