@@ -21,6 +21,8 @@ contract Fungi {
     mapping(bytes32 => Connection) connections;
     mapping(bytes32 => Request) requests;
 
+    event NewConnection(address alice, address bob);
+
     function newPoint() public {
 	Point memory p = Point(42, 42);
 	points[msg.sender] = p;
@@ -52,6 +54,8 @@ contract Fungi {
 	
 	Connection memory c = Connection(r.requested, r.requestee);
 	connections[linkAddress] = c;
+	
+	emit NewConnection(r.requested, r.requestee);
     }
 
     function getConnection(bytes32 linkAddress) public view returns (address, address) {

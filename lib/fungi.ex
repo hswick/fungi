@@ -3,7 +3,7 @@ defmodule Fungi do
   Documentation for Fungi.
   """
 
-  def init_contract do
+  def init_contract do											     
     ExW3.Contract.start_link
 
     abi = ExW3.load_abi("/build/Fungi.abi")
@@ -30,7 +30,7 @@ defmodule Fungi do
 
   def get_point(account) do
     {:ok, x, y} = ExW3.Contract.call(:Fungi, :getPoint, [ExW3.to_decimal(account)])
-    {x, y}
+     {x, y}
   end
 
   def new_connection_request(account0, account1) do
